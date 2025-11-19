@@ -11,29 +11,25 @@ connectDB();
 
 const app = express();
 
-
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 app.use(express.json());
 
-
 app.use(
   cors({
-    origin:  "https://localhost:5173",
+    origin: "https://localhost:5173",
     credentials: true,
   })
 );
 
-
 app.use("/api/v1/auth", authRoute);
-
 
 const clientDistPath = path.join(__dirname, "../client/dist");
 app.use(express.static(clientDistPath));
 
-
-app.get("*", (req, res) => {
+// ✅ Fixed catch-all route
+app.get("/*", (req, res) => {
   res.sendFile(path.join(clientDistPath, "index.html"));
 });
 
