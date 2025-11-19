@@ -25,13 +25,12 @@ app.use(
 
 app.use("/api/v1/auth", authRoute);
 
-const clientDistPath = path.join(__dirname, "../client/dist");
-app.use(express.static(clientDistPath));
+app.use(express.static(path.join(__dirname, "../client/dist")));
 
-// ✅ Fixed catch-all route
-app.get("*", (req, res) => {
-  res.sendFile(path.join(clientDistPath, "index.html"));
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "../client/dist/index.html"));
 });
+
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
